@@ -1,1 +1,1 @@
-# algoritmosIIativIIa
+ATIVIDADE 2 DE ALGORITMOS 2 PARTE A
