@@ -681,13 +681,30 @@ void pesquisaritem(Livro livros[], Revista rev[], Autor autores[], Editora edito
 int main()
 {
     
-    Livro livros[maxlivros];
-    Revista revista[maxrevistas];
-    Autor autor[maxautor];
-    Editora editora[maxeditora];
-    Usuario users[maxusers];
+    Livro livros[maxlivros] = {
+    {"Harry Potter","Ficcao", 68467, "JK Rowling", "Editora Rocco", 65473, true},
+    {"Morte no Nilo","Terror", 68468, "Agatha Christie", "Editora Rocco", 0, false },
+    {"Great Gatsby","Romance", 68465, "Scott Fitzgerald", "Editora Arqueiro", 0, false } };
+    livros[1].Assunto = { "Ficcao" };
+    livros[2].Assunto = { "Romance" };
+    livros[3].Assunto = { "Terror" };
+
+    Revista revista[maxrevistas] = {
+    {"Harry Potter", "Ficcao","Editora Rocco"},
+    { "Morte no Nilo","Terror","Editora Rocco" },
+    { "Great Gatsby","Romance","Editora Arqueiro"}
+    };
+    revista[1].Assunto = { "Ficcao" };
+    revista[2].Assunto = { "Romance" };
+    revista[3].Assunto = { "Terror" };
+    Autor autor[maxautor] = { "Agatha Christie", "JK Rowling", "Scott Fitzgerald", "", "", "", "", "", "", "" };
+    Editora editora[maxeditora] = { "Editora Rocco", "Companhia das Letras", "Editora Arqueiro", "", "", "", "", "", "", "" };
+    Usuario users[maxusers] = {
+        {87654,"John"},
+        {76543,"Peter"}
+    };
     int escolha;
-    int usercont = 4;
+    int usercont = 2;
     int livrocont = 4;
     int revistacont = 4;
     int autorcont = 4;
