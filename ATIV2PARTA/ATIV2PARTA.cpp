@@ -7,6 +7,8 @@
 
 using namespace std;
 
+/*FEITO POR ALUNA IZABELA ANDREAZZA*/
+
 /*STRUCTS*/
 struct Autor {
 
@@ -26,6 +28,7 @@ struct Livro {
     Autor Autor;
     Editora Editora;
     int IDuser;
+
     bool Retirado=false; //pra registrar o livro
   
 };
@@ -69,7 +72,7 @@ void cadastroautor(Autor autor[], int &contautores) { //o & pra poder fazer apar
             break;
         }
 
-        cout << "Digite o nome do autor "<< contautores <<":" << endl;
+        cout << "Digite o nome do autor "<< contautores + 1 <<":" << endl;
         cin >> autor[contautores].Nome;
 
         contautores++;
@@ -118,7 +121,7 @@ void cadastroeditora(Editora editor[], int &conteditor) {
             break;
         }
 
-        cout << "Digite o nome da Editora " << conteditor << ":" << endl;
+        cout << "Digite o nome da Editora " << conteditor + 1<< ":" << endl;
         cin >> editor[conteditor].Nome;
 
         conteditor++;
@@ -166,7 +169,7 @@ void cadastrousuario(Usuario users[], int &i ) {
         int id;
         
         do {
-            cout << "Usuario " << i << ":" << endl;
+            cout << "Usuario " << i + 1 << ":" << endl;
             cout << "Digite um codigo de 5 digitos (1 a 9): ";
             cin >> id;
         } while (id < 11111 || id > 99999); // verifica se o codigo tem 5 dígitos e vai ser entre 11111 e 99999
@@ -201,13 +204,14 @@ void cadastrousuario(Usuario users[], int &i ) {
 
 
 /*CADASTRAR LIVRO*/
-void cadastrolivro(Livro livros[], Autor autores[], Editora editoras[], int &contlivro) {
+void cadastrolivro(Livro livros[], Autor autores[], Editora editoras[], int &contlivro)
+{
     
     
     bool continuar = true;
 
     while (continuar) {
-        cout << "Digite o titulo do livro " << contlivro << ":" << endl;
+        cout << "Digite o titulo do livro " << contlivro + 1 << ":" << endl;
         cin.ignore();
         getline(cin, livros[contlivro].Titulo);
 
@@ -331,7 +335,7 @@ void cadastrorevista(Revista rev[], Editora edit[], int &i) {
    
 
     do {
-        cout << "Digite o titulo da Revista " << i << ":" << endl;
+        cout << "Digite o titulo da Revista " << i + 1 << ":" << endl;
         getline(cin, rev[i].Titulo);
 
         cout << "Digite o assunto da Revista: ";
@@ -440,7 +444,8 @@ void retirarLivro(Usuario users[], Livro livros[], Autor autor[], Editora edit[]
     localtime_s(&Datadevolucao, &agora); //usa a datadevolucao da struct de tm e o agora da de time_t
     Datadevolucao.tm_mday += 7; //adiciona 7 dias pro tm_day
     mktime(&Datadevolucao); //vai converter a estrutura do tm para uma de time_t
-    cout << "Livro retirado com sucesso. Devolva ate " << Datadevolucao.tm_mday << "/" << Datadevolucao.tm_mon + 1 << "/" << Datadevolucao.tm_year + 1900 << endl;
+    cout << "Livro retirado com sucesso. Devolva ate " << Datadevolucao.tm_mday << "/" << Datadevolucao.tm_mon + 1 << "/" << Datadevolucao.tm_year + 1900 << endl; //mes comeca em o entao por isso adiciona 1 e ano desde 1900 por isso adiciona 
+     
     return;
     
 }
@@ -680,23 +685,19 @@ void pesquisaritem(Livro livros[], Revista rev[], Autor autores[], Editora edito
 
 int main()
 {
-    
+
     Livro livros[maxlivros] = {
     {"Harry Potter","Ficcao", 68467, "JK Rowling", "Editora Rocco", 65473, true},
     {"Morte no Nilo","Terror", 68468, "Agatha Christie", "Editora Rocco", 0, false },
     {"Great Gatsby","Romance", 68465, "Scott Fitzgerald", "Editora Arqueiro", 0, false } };
-    livros[1].Assunto = { "Ficcao" };
-    livros[2].Assunto = { "Romance" };
-    livros[3].Assunto = { "Terror" };
+    
 
     Revista revista[maxrevistas] = {
     {"Harry Potter", "Ficcao","Editora Rocco"},
     { "Morte no Nilo","Terror","Editora Rocco" },
     { "Great Gatsby","Romance","Editora Arqueiro"}
     };
-    revista[1].Assunto = { "Ficcao" };
-    revista[2].Assunto = { "Romance" };
-    revista[3].Assunto = { "Terror" };
+    
     Autor autor[maxautor] = { "Agatha Christie", "JK Rowling", "Scott Fitzgerald", "", "", "", "", "", "", "" };
     Editora editora[maxeditora] = { "Editora Rocco", "Companhia das Letras", "Editora Arqueiro", "", "", "", "", "", "", "" };
     Usuario users[maxusers] = {
@@ -705,14 +706,15 @@ int main()
     };
     int escolha;
     int usercont = 2;
-    int livrocont = 4;
-    int revistacont = 4;
-    int autorcont = 4;
-    int editoracont = 4;
+    int livrocont = 3;
+    int revistacont = 3;
+    int autorcont = 3;
+    int editoracont = 3;
 
 
     do {
-        cout << endl << "Escolha uma opcao:" << endl;
+        cout << endl << "\t ---MENU---" << endl;
+        cout << " Escolha uma opcao:" << endl << endl ;
         cout << "\t1 - Cadastro dos usuarios" << endl;
         cout << "\t2 - Cadastro para livros e Revistas e afins" << endl;
         cout << "\t3 - Alterar livros, autores e editoras" << endl;
@@ -876,7 +878,7 @@ int main()
         case 0:
             break;
         default:
-            cout << "Opcao invalida, inserir numeros de 0 a 5" << endl;
+            cout << "Opcao invalida, inserir numeros de 0 a 8" << endl;
        }
 
     } while (escolha != 0);
