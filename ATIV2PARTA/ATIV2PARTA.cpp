@@ -26,7 +26,7 @@ struct Livro {
     Autor Autor;
     Editora Editora;
     int IDuser;
-    bool Retirado=false;
+    bool Retirado=false; //pra registrar o livro
   
 };
 struct Revista {
@@ -43,7 +43,7 @@ struct Usuario {
     
 
 };
-struct tm Datadevolucao;
+struct tm Datadevolucao; //para poder usar as funcoes de tm_day e afins para dizer dia de devolucao e contar os atrasos
 
 /*MAX COISAS*/
 const int maxlivros = 20;
@@ -60,12 +60,12 @@ Editora editora[maxeditora];
 Usuario users[maxusers];
 
 /*CADASTRAR E ALTERAR AUTOR*/
-void cadastroautor(Autor autor[], int &contautores) {
+void cadastroautor(Autor autor[], int &contautores) { //o & pra poder fazer apartir do 4 e ir mudando no array
     Autor autores;
     
     while (true) {
         if (contautores >= maxautor) {
-            cout << "Número máximo de autores atingido." << endl;
+            cout << "Foi atigindo o numero maximo de autores." << endl;
             break;
         }
 
@@ -74,10 +74,10 @@ void cadastroautor(Autor autor[], int &contautores) {
 
         contautores++;
 
-        cout << "Deseja cadastrar mais um autor? (s/n): ";
-        char opcao;
-        cin >> opcao;
-        if (opcao == 'n' || opcao == 'N') {
+        cout << "Deseja cadastrar mais um autor? S para sim e N para nao: ";
+        char escolha;
+        cin >> escolha;
+        if (escolha == 'n' || escolha == 'N') {
             break;
         }
     }
@@ -87,23 +87,23 @@ void cadastroautor(Autor autor[], int &contautores) {
         cout << i + 1 << ". " << autor[i].Nome << endl;
     }
 }
-void alterarAutor(Autor autores[]) {
-    int opcao;
+void alterarautor(Autor autores[]) {
+    int escolha;
     cout << "Selecione o autor que deseja alterar: " << endl;
     for (int i = 0; i < maxautor; i++) {
         cout << i << ". " << autores[i].Nome << endl;
     }
-    cin >> opcao;
+    cin >> escolha;
 
-    // verifica se a opção escolhida é válida
-    if (opcao < 0 || opcao >= maxautor) {
-        cout << "Opção inválida." << endl;
+    
+    if (escolha < 0 || escolha >= maxautor) {
+        cout << "Opcao invalida" << endl;
         return;
     }
 
-    // pede ao usuário para digitar o novo nome do autor
+    // pede ao usuario para digitar o novo nome do autor
     cout << "Digite o novo nome do autor: ";
-    cin >> autores[opcao].Nome;
+    cin >> autores[escolha].Nome;                   //vai ir no array do autor especifico e alterar o nome
 
     cout << "Autor alterado com sucesso!" << endl;
 }
@@ -114,7 +114,7 @@ void cadastroeditora(Editora editor[], int &conteditor) {
     
     while (true) {
         if (conteditor >= maxeditora) {
-            cout << "Número máximo de Editoras atingido." << endl;
+            cout << "Foi atigindo o numero maximo de editoras." << endl;
             break;
         }
 
@@ -123,10 +123,10 @@ void cadastroeditora(Editora editor[], int &conteditor) {
 
         conteditor++;
 
-        cout << "Deseja cadastrar mais uma Editora? (s/n): ";
-        char opcao;
-        cin >> opcao;
-        if (opcao == 'n' || opcao == 'N') {
+        cout << "Deseja cadastrar mais uma Editora? S para sim e N para nao: ";
+        char escolha;
+        cin >> escolha;
+        if (escolha == 'n' || escolha == 'N') {
             break;
         }
     }
@@ -136,62 +136,62 @@ void cadastroeditora(Editora editor[], int &conteditor) {
         cout << i + 1 << ". " << editor[i].Nome << endl;
     }
 }
-void alterareditora(Autor autores[]) {
-    int opcao;
-    cout << "Selecione o autor que deseja alterar: " << endl;
-    for (int i = 0; i < maxautor; i++) {
-        cout << i << ". " << autores[i].Nome << endl;
+void alterareditora(Editora editor[]) {
+    int escolha;
+    cout << "Selecione o editora que deseja alterar: " << endl;
+    for (int i = 0; i < maxeditora; i++) {
+        cout << i << ". " << editor[i].Nome << endl;
     }
-    cin >> opcao;
+    cin >> escolha;
 
-    // verifica se a opção escolhida é válida
-    if (opcao < 0 || opcao >= maxautor) {
-        cout << "Opção inválida." << endl;
+    
+    if (escolha < 0 || escolha >= maxeditora) {
+        cout << "Opcao invalida." << endl;
         return;
     }
 
-    // pede ao usuário para digitar o novo nome do autor
+    
     cout << "Digite o novo nome do autor: ";
-    cin >> autores[opcao].Nome;
+    cin >> editor[escolha].Nome;
 
-    cout << "Autor alterado com sucesso!" << endl;
+    cout << "Editora alterada com sucesso!" << endl;
 }
 
 /*CADASTRO USUARIO*/
 void cadastrousuario(Usuario users[], int &i ) {
     int continuar = 1;
     do {
-        // Pede ao usuário para digitar o código
+      
 
         int id;
         
         do {
             cout << "Usuario " << i << ":" << endl;
-            cout << "Digite um código de 5 dígitos (1 a 9): ";
+            cout << "Digite um codigo de 5 digitos (1 a 9): ";
             cin >> id;
-        } while (id < 11111 || id > 99999); // verifica se o código tem 5 dígitos e está no intervalo [11111, 99999]
+        } while (id < 11111 || id > 99999); // verifica se o codigo tem 5 dígitos e vai ser entre 11111 e 99999
 
-        // Verifica se o código já existe
-        bool existe = false;
+        
+        bool existe = false;//vai verificar se o codigo ja existe
         for (int j = 0; j < i; j++) {
 
-            if (users[j].Id == id) { // aqui deve ser users[j] em vez de users[i]
+            if (users[j].Id == id) { 
 
-                existe = true;
+                existe = true; //se existir ele entra na funcao do if
                 break;
             }
         }
         if (existe) {
-            cout << "Esse código já foi cadastrado. Tente novamente.\n";
-            continue; // repete a iteração para pedir um novo código
+            cout << "Esse codigo ja foi cadastrado." << endl;
+            continue;
         }
 
-        // Pede ao usuário para digitar o nome
+      
 
-        cout << "Digite um nome (sem números): ";
+        cout << "Digite um nome: ";
         cin.ignore();
         getline(cin, users[i].Nome);
-        users[i].Id = id; // adiciona o código ao usuário cadastrado
+        users[i].Id = id; //vai colocar o codigo do usuario em relacao a ele mesmo
         i++;
 
         cout << "Deseja sair? precione 1 para nao e 0 para sim: ";
@@ -202,66 +202,65 @@ void cadastrousuario(Usuario users[], int &i ) {
 
 /*CADASTRAR LIVRO*/
 void cadastrolivro(Livro livros[], Autor autores[], Editora editoras[], int &contlivro) {
-    Livro opcaoautor;
+    
     
     bool continuar = true;
 
     while (continuar) {
-        cout << "Digite o título do livro " << contlivro << ":" << endl;
+        cout << "Digite o titulo do livro " << contlivro << ":" << endl;
         cin.ignore();
         getline(cin, livros[contlivro].Titulo);
 
         cout << "Digite o assunto do livro: ";
         getline(cin, livros[contlivro].Assunto);
 
-        // Mostra a lista de autores cadastrados
-        cout << "Autores cadastrados:\n";
+       
+        cout << "Autores cadastrados: " << endl;
         for (int j = 0; j < maxautor; j++) {
             cout << j << ". " << autores[j].Nome << endl;
         }
 
-        // Pede ao usuário para escolher um autor
-        int opcao;
+        //vai pedir pro usuario digitar e vai verificar se pode 
+        int escolha;
         do {
             cout << "Digite o número do autor: ";
-            cin >> opcao;
-        } while (opcao < -1 || opcao >= maxautor); // verifica se a opção é válida
+            cin >> escolha;
+        } while (escolha < -1 || escolha >= maxautor); 
 
-        livros[contlivro].Autor = autores[opcao];
-        /////////////////////////////////////////////////////////////////////////////////////////////
-                // Mostra a lista de editoras cadastradas
-        cout << "Editoras cadastradas:\n";
+        livros[contlivro].Autor = autores[escolha]; //vai igualar o autor no autor do struct dos livros pra salvar
+        
+              
+
+        cout << "Editoras cadastradas: " <<endl;
         for (int j = 0; j < maxeditora; j++) {
             cout << j << ". " << editoras[j].Nome << endl;
         }
 
 
-        // Pede ao usuário para escolher uma editora ou cadastrar uma nova
+        //vai pedir pro usuario digitar e vai verificar se pode essa opcao
         do {
             cout << "Digite o número da editora: ";
-            cin >> opcao;
-        } while (opcao < -1 || opcao >= maxeditora); // verifica se a opção é válida
+            cin >> escolha;
+        } while (escolha < -1 || escolha >= maxeditora); 
+
+        livros[contlivro].Editora = editoras[escolha];
 
 
-        // Usa uma editora já cadastrada
-        livros[contlivro].Editora = editoras[opcao];
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        
         srand(time(NULL));
-        livros[contlivro].Id = rand() % 100000; // gera um número aleatório entre 0 e 99999
+        livros[contlivro].Id = rand() % 100000; // vai gerar um número aleatório entre 0 e 99999
         livros[contlivro].Id = livros[contlivro].Id + 10000; // adiciona 10000 para garantir que o código tenha 5 dígitos
-        livros[contlivro].Id = livros[contlivro].Id % 100000; // remove o primeiro dígito (caso o código gerado seja maior do que 99999)
+        livros[contlivro].Id = livros[contlivro].Id % 100000; // remove o primeiro digito pra se o ficar maior que 99999
         if (livros[contlivro].Id < 10000) {
-            livros[contlivro].Id = livros[contlivro].Id + 10000; // adiciona 10000 novamente, caso o código tenha menos de 5 dígitos
+            livros[contlivro].Id = livros[contlivro].Id + 10000; //so vai adicionar se tiver menos que 5 digitos
         }
         cout << "O código gerado para este livro é: " << livros[contlivro].Id << endl;
         contlivro++;
 
-        // Pergunta ao usuário se deseja continuar cadastrando livros
-        char resposta;
+        
+        char resposta;//perguntar ao usuario quer continuar cadastrando livros
         do {
-            cout << "Deseja cadastrar outro livro? (S/N) ";
+            cout << "Deseja cadastrar outro livro? S para sim e N para nao ";
             cin >> resposta;
         } while (resposta != 'S' && resposta != 's' && resposta != 'N' && resposta != 'n');
 
@@ -272,56 +271,56 @@ void cadastrolivro(Livro livros[], Autor autores[], Editora editoras[], int &con
 
     cout << "Cadastro de livros finalizado." << endl;
 }
-void alterarLivro(Livro livros[], Autor autores[], Editora editoras[]) {
-    int opcao;
+void alterarlivro(Livro livros[], Autor autores[], Editora editoras[]) {
+    int escolha;
     cout << "Selecione o livro que deseja alterar: " << endl;
     for (int i = 0; i < maxlivros; i++) {
         cout << i << ". " << livros[i].Titulo << endl;
     }
-    cin >> opcao;
+    cin >> escolha;
 
-    // verifica se a opção escolhida é válida
-    if (opcao < 0 || opcao >= maxlivros) {
-        cout << "Opção inválida." << endl;
-        return;
+   
+    if (escolha < 0 || escolha >= maxlivros) {
+        cout << "opcao invalida." << endl;
+        return;                             //verificacao
     }
 
-    // pede ao usuário para digitar as novas informações do livro
-    cout << "Digite o novo título do livro: ";
-    getline(cin, livros[opcao].Titulo);
+    //botar as novas informacoes do livro
+    cout << "Digite o novo titulo do livro: ";
+    getline(cin, livros[escolha].Titulo);
 
     cout << "Digite o novo assunto do livro: ";
-    getline(cin, livros[opcao].Assunto);
+    getline(cin, livros[escolha].Assunto);
 
-    // verifica se o autor existe e atualiza o valor correspondente no array de livros
-    int opcaoAutor;
+    //vai verificar se o autor existe e atualiza o valor no array de livros
+    int opdoautor;
     cout << "Selecione o autor do livro: " << endl;
     for (int i = 0; i < maxautor; i++) {
         cout << i << ". " << autores[i].Nome << endl;
     }
-    cin >> opcaoAutor;
+    cin >> opdoautor;
 
-    if (opcaoAutor < 0 || opcaoAutor >= maxautor) {
-        cout << "Autor inválido." << endl;
+    if (opdoautor < 0 || opdoautor >= maxautor) {
+        cout << "Autor invalido." << endl;
         return;
     }
 
-    livros[opcao].Autor = autores[opcaoAutor];
+    livros[escolha].Autor = autores[opdoautor];
 
-    // verifica se a editora existe e atualiza o valor correspondente no array de livros
-    int opcaoEditora;
+
+    int opdoeditor;
     cout << "Selecione a editora do livro: " << endl;
     for (int i = 0; i < maxeditora; i++) {
         cout << i << ". " << editoras[i].Nome << endl;
     }
-    cin >> opcaoEditora;
+    cin >> opdoeditor;
 
-    if (opcaoEditora < 0 || opcaoEditora >= maxeditora) {
-        cout << "Editora inválida." << endl;
+    if (opdoeditor < 0 || opdoeditor >= maxeditora) {
+        cout << "Editora invalida." << endl;
         return;
     }
 
-    livros[opcao].Editora = editoras[opcaoEditora];
+    livros[escolha].Editora = editoras[opdoeditor];
 
     cout << "Livro alterado com sucesso!" << endl;
 }
@@ -332,35 +331,34 @@ void cadastrorevista(Revista rev[], Editora edit[], int &i) {
    
 
     do {
-        cout << "Digite o título da Revista " << i << ":" << endl;
+        cout << "Digite o titulo da Revista " << i << ":" << endl;
         getline(cin, rev[i].Titulo);
 
         cout << "Digite o assunto da Revista: ";
         getline(cin, rev[i].Assunto);
 
-        // Mostra a lista de editoras cadastradas
-        cout << "Editoras cadastradas:\n";
+        cout << "Editoras cadastradas: " << endl;
         for (int j = 0; j < maxeditora; j++) {
             cout << j << ". " << edit[j].Nome << endl;
         }
 
-        // Pede ao usuário para escolher uma editora ou cadastrar uma nova
-        int opcao;
+      
+        int escolha;
         do {
             cout << "Digite o número da editora: ";
-            cin >> opcao;
-        } while (opcao < -1 || opcao >= maxeditora); // verifica se a opção é válida
+            cin >> escolha;
+        } while (escolha < -1 || escolha >= maxeditora); 
 
-        rev[i].Editora = edit[opcao];
+        rev[i].Editora = edit[escolha];
         i++;
 
-        // Pergunta ao usuário se deseja cadastrar mais uma revista
-        cout << "Deseja cadastrar mais uma revista? (s/n): ";
-        char opcoes;
-        cin >> opcoes;
-        cin.ignore(); // Limpa o buffer do teclado
+       
+        cout << "Deseja cadastrar mais uma revista? S para sim e N para nao: ";
+        char escolhas;
+        cin >> escolhas;
+        cin.ignore(); 
 
-        if (opcoes == 'n' || opcoes == 'N' || i >= maxrevistas) {
+        if (escolhas == 'n' || escolhas == 'N' || i >= maxrevistas) {
             break;
         }
     } while (true);
@@ -379,11 +377,11 @@ void retirarLivro(Usuario users[], Livro livros[], Autor autor[], Editora edit[]
     int idUser;
     int idLivro;
 
-    // Pedir ID do usuário
+   //vai pedir o id do usuario pra que possa saber quem tirou o livro depois
     cout << "Digite seu ID: ";
     cin >> idUser;
 
-    // Encontrar usuário
+    //verificacao de se existe o usuario
     for (int i = 0; i < maxusers; i++) {
         if (users[i].Id == idUser) {
             userEncontrado = true;
@@ -392,35 +390,35 @@ void retirarLivro(Usuario users[], Livro livros[], Autor autor[], Editora edit[]
     }
 
     if (!userEncontrado) {
-        cout << "Usuário não encontrado!" << endl;
+        cout << "Usuario nao encontrado!" << endl;
         return;
     }
 
-    cout << "Livros disponíveis para retirada:" << endl;
+    cout << "Livros disponiveis para retirada:" << endl;
     for (int i = 0; i < maxlivros; i++) {
         if (livros[i].Retirado == false) {
             cout << livros[i].Id << ". " << livros[i].Titulo << " - " << endl;
         }
     }
 
-    // Pede ao usuário para escolher o ID do livro a ser retirado
+    //pede o id do livro que quer tirar
     do {
         cout << "Digite o ID do livro que deseja retirar: ";
         cin >> idLivro;
 
-        // Procura o livro com o ID escolhido pelo usuário
+        //verificacao de se existe e se ja foi retirado
         for (int i = 0; i < maxlivros; i++) {
             if (livros[i].Id == idLivro) {
                 livroEncontrado = true;
 
-                // Verifica se o livro está disponível para empréstimo
+                
                 if (livros[i].Retirado == true) {
-                    cout << "Este livro já foi retirado por outro usuário." << endl;
+                    cout << "Este livro ja foi retirado" << endl;
                     livroEncontrado = false;
                     break;
                 }
 
-                // Registra o empréstimo
+                //se passar pelos de cima vai registrar 
                 livros[i].Retirado = true;
                 livros[i].IDuser = idUser;
                 cout << "Livro " << livros[i].Titulo << " retirado com sucesso!" << endl;
@@ -429,19 +427,20 @@ void retirarLivro(Usuario users[], Livro livros[], Autor autor[], Editora edit[]
         }
 
         if (!livroEncontrado) {
-            cout << "Livro não encontrado. Tente novamente." << endl;
+            cout << "Livro nao encontrado. Escolha de novo." << endl;
         }
+
     } while (!livroEncontrado);
 
     cout << "Livro escolhido: " << livro.Titulo << endl;
 
-    // Calcula a data de devolução (7 dias após a data atual)
-    time_t agora = time(0);
+    // Calcula a data de devolucao 
+    time_t agora = time(0); //pra ter a data e hora atuais
     
-    localtime_s(&Datadevolucao, &agora);
-    Datadevolucao.tm_mday += 7;
-    mktime(&Datadevolucao); //Converts tm structure to time_t format or calendar equivalent.
-    cout << "Livro retirado com sucesso. Por favor, devolva até " << Datadevolucao.tm_mday << "/" << Datadevolucao.tm_mon + 1 << "/" << Datadevolucao.tm_year + 1900 << endl;
+    localtime_s(&Datadevolucao, &agora); //usa a datadevolucao da struct de tm e o agora da de time_t
+    Datadevolucao.tm_mday += 7; //adiciona 7 dias pro tm_day
+    mktime(&Datadevolucao); //vai converter a estrutura do tm para uma de time_t
+    cout << "Livro retirado com sucesso. Devolva ate " << Datadevolucao.tm_mday << "/" << Datadevolucao.tm_mon + 1 << "/" << Datadevolucao.tm_year + 1900 << endl;
     return;
     
 }
@@ -452,14 +451,14 @@ void listagematrasos(Usuario users[], Livro livros[]) {
     bool livroEncontrado = false;
     bool userEncontrado = false;
 
-    // Obter a data e hora atuais
+    
     time_t agora = time(0);
 
-    // Pedir ID do usuário
+    
     cout << "Digite seu ID: ";
     cin >> userID;
 
-    // Encontrar usuário
+    //verificacao
     for (int i = 0; i < maxusers; i++) {
         if (users[i].Id == userID) {
             userEncontrado = true;
@@ -468,26 +467,27 @@ void listagematrasos(Usuario users[], Livro livros[]) {
     }
 
     if (!userEncontrado) {
-        cout << "Usuário não encontrado!" << endl;
+        cout << "Usuario nao foi encontrado!" << endl;
         return;
     }
 
-    // Mostrar os livros emprestados pelo usuário que estão atrasados
-    bool temLivroAtrasado = false;
+    //vai checar ser tem livro atrasado e se tiver vai mostrar
+    bool temlivroatraso = false;
     for (int i = 0; i < maxlivros; i++) {
-        Livro livro = livros[i];
+        Livro livro = livros[i]; //vai pegar o livro do array e passar pra variavel
         if (Datadevolucao.tm_mday != 0 && Datadevolucao.tm_mday < agora && livro.IDuser == userID) {
-            if (!temLivroAtrasado) {
-                cout << "Os seguintes livros estão atrasados:\n";
-                temLivroAtrasado = true;
+            temlivroatraso = true;                                                                   //se foi diferente de 0 menor q o dia de hj e os ids forem iguais dai entra
+            if (temlivroatraso) {
+                cout << "Esses livros estao em atraso: " << endl;
+                
             }
-            cout << livro.Titulo << "\n";
+            cout << livro.Titulo <<endl ;
         }
     }
 
-    // Se não há livros atrasados, mostrar uma mensagem
-    if (!temLivroAtrasado) {
-        cout << "Não há livros atrasados para o usuário: " << userID << "\n";
+   
+    if (!temlivroatraso) {
+        cout << "Nao existem nenhum livro em atraso para o usuario: " << userID << endl;
     }
 }
 
@@ -495,13 +495,13 @@ void historicaretirados(Usuario users[], Livro livros[]) {
     int idUser;
     bool userEncontrado = false;
 
-    // Pedir o ID do usuário
+    
     do {
-        cout << "Digite o ID do usuário para ver o histórico de retiradas: ";
+        cout << "Digite o ID do usuario para ver o historico de retiradas: ";
         cin >> idUser;
-    } while (idUser < 11111 || idUser > 99999); // verifica se o ID tem 5 dígitos e está no intervalo [11111, 99999]
+    } while (idUser < 11111 || idUser > 99999);
 
-    // Verificar se o usuário existe
+    
     for (int i = 0; i < maxusers; i++) {
         if (users[i].Id == idUser) {
             userEncontrado = true;
@@ -510,26 +510,26 @@ void historicaretirados(Usuario users[], Livro livros[]) {
     }
 
     if (!userEncontrado) {
-        cout << "Usuário não encontrado." << endl;
+        cout << "Usuario nao foi encontrado." << endl;
         return;
     }
 
-    Livro livrosRetirados[maxlivros];
-    int numret = 0;
+    Livro livrosRetirados[maxlivros]; //cria um array pros livros retirados
+    int numret = 0; //contador pros livros retirados
 
-    // Filtrar livros retirados pelo usuário
+    // Filtrar livros retirados pelo usuario
     for (int i = 0; i < maxlivros; i++) {
-        if (livros[i].Retirado && livros[i].IDuser == idUser) {
-            livrosRetirados[numret] = livros[i];
+        if (livros[i].Retirado && livros[i].IDuser == idUser) { //checa o id com o id de quem retirou
+            livrosRetirados[numret] = livros[i]; //livros retirados adquiri o nome no array
             numret++;
         }
     }
 
     if (numret == 0) {
-        cout << "O usuário não tem livros emprestados." << endl;
+        cout << "Usuario nao contem nenhum livro retirado" << endl;
     }
     else {
-        cout << "Histórico de empréstimos do usuário:" << endl;
+        cout << "Historico de retiradas:" << endl;
         for (int i = 0; i < numret; i++) {
             cout << "Livro: " << livrosRetirados[i].Titulo << endl;
         }
@@ -547,10 +547,11 @@ void listagemautores(Autor autor[])
 void listagemeditora(Livro livros[], Revista rev[]) {
     cout << "Lista das Editoras" << endl;
     for (int i = 0; i < maxlivros; i++) {
-        cout << "Nome das Editoras das dos livros: " << livros[i].Editora.Nome << endl;
+        cout << "Nome das Editora Livro: " << livros[i].Editora.Nome << endl;
     }
+    cout << endl;
     for (int i = 0; i < maxrevistas; i++) {
-        cout << "Nome das Editoras das revistas: " << rev[i].Editora.Nome << endl;
+        cout << "Nome Editora Revista: " << rev[i].Editora.Nome << endl ;
     }
 };
 void listagemlivro(Livro livros[], Autor autor[], Editora edit[]) {
@@ -560,7 +561,7 @@ void listagemlivro(Livro livros[], Autor autor[], Editora edit[]) {
         cout << "Titulo: " << livros[i].Titulo << endl;
         cout << "Assunto: " << livros[i].Assunto << endl;
         cout << "Autor: " << livros[i].Autor.Nome << endl;
-        cout << "Editora: " << livros[i].Editora.Nome << endl;
+        cout << "Editora: " << livros[i].Editora.Nome << endl << endl;
 
 
     }
@@ -570,7 +571,7 @@ void listagemrevista(Revista rev[], Editora edit[]) {
     for (int i = 0; i < maxrevistas; i++) {
         cout << "Titulo: " << rev[i].Titulo << endl;
         cout << "Assunto: " << rev[i].Assunto << endl << endl;
-        cout << "Editora: " << rev[i].Editora.Nome << endl;
+        cout << "Editora: " << rev[i].Editora.Nome << endl << endl;
 
 
     }
@@ -578,16 +579,108 @@ void listagemrevista(Revista rev[], Editora edit[]) {
 void listagemassuntos(Livro livros[], Revista rev[]) {
     cout << "Lista dos Assuntos" << endl;
     for (int i = 0; i < maxlivros; i++) {
-        cout << "Assuntos dos livros: " << livros[i].Assunto << endl;
+        cout << "Assuntos livros: " << livros[i].Assunto << endl;
     }
+    cout << endl;
     for (int i = 0; i < maxrevistas; i++) {
-        cout << "Assuntos das revistas: " << rev[i].Assunto << endl;
+        cout << "Assuntos revistas: " << rev[i].Assunto << endl;
     }
 };
 
+void pesquisaritem(Livro livros[], Revista rev[], Autor autores[], Editora editoras[], int opcao) {
+
+    string busca;
+
+    switch (opcao) {
+        case 1: {
+            cout << "Digite o titulo que deseja pesquisar: ";
+            cin.ignore();
+            getline(cin, busca);
+
+            for (int i = 0; i < maxlivros; i++) {
+                if (livros[i].Titulo == busca) {             //se busca iguala ao item dentro do array entao ele mostra oque achou
+                    cout << "Livro encontrado:" << endl;
+                    cout << "Titulo: " << livros[i].Titulo << endl;
+                    cout << "Autor: " << livros[i].Autor.Nome << endl;
+                    cout << "Editora: " << livros[i].Editora.Nome << endl;
+                    cout << "Assunto: " << livros[i].Assunto << endl;
+                    return;
+                }
+                else if (rev[i].Titulo == busca) {
+                    cout << "Revista encontrada:" << endl;
+                    cout << "Titulo: " << rev[i].Titulo << endl;
+                    cout << "Editora: " << rev[i].Editora.Nome << endl;
+                    cout << "Assunto: " << rev[i].Assunto << endl;
+                    return;
+                }
+            }
+
+            cout << "Titulo nao encontrado." << endl;
+            break;
+        }
+        case 2: {
+            cout << "Digite o nome do autor que deseja pesquisar: ";
+            cin.ignore();
+            getline(cin, busca);
+
+            for (int i = 0; i < maxautor; i++) {
+                if (autores[i].Nome == busca) {
+                    cout << "Autor encontrado:" << endl;
+                    cout << "Nome: " << autores[i].Nome << endl;
+
+                    return;
+                }
+            }
+
+            cout << "Autor nao encontrado." << endl;
+            break;
+        }
+        case 3: {
+            cout << "Digite o nome da editora que deseja pesquisar: ";
+            cin.ignore();
+            getline(cin, busca);
+
+            for (int i = 0; i < maxeditora; i++) {
+                if (editoras[i].Nome == busca) {
+                    cout << "Editora encontrada:" << endl;
+                    cout << "Nome: " << editoras[i].Nome << endl;
+
+                    return;
+                }
+            }
+
+            cout << "Editora nao encontrada." << endl;
+            break;
+        }
+        case 4: {
+            cout << "Digite o nome do assunto que deseja pesquisar: ";
+            cin.ignore();
+            getline(cin, busca);
+
+            for (int i = 0; i < maxlivros; i++) {
+                if (livros[i].Assunto == busca) {
+                    cout << "Assunto em livro encontrado:" << endl;
+                    cout << "Título: " << livros[i].Titulo << endl;
+                    cout << "Autor: " << livros[i].Autor.Nome << endl;
+                    cout << "Editora: " << livros[i].Editora.Nome << endl;
+                    cout << "Assunto: " << livros[i].Assunto << endl;
+                }
+                else if (rev[i].Assunto == busca) {
+                    cout << "Assunto em revista encontrada:" << endl;
+                    cout << "Titulo: " << rev[i].Titulo << endl;
+                    cout << "Editora: " << rev[i].Editora.Nome << endl;
+                    cout << "Assunto: " << rev[i].Assunto << endl;
+                    return;
+                }
+            }
+            cout << "Assunto nao encontrado." << endl;
+        }
+    }
+}
+
 int main()
 {
-    setlocale(LC_ALL, "Portuguese");
+    
     Livro livros[maxlivros];
     Revista revista[maxrevistas];
     Autor autor[maxautor];
@@ -605,10 +698,12 @@ int main()
         cout << endl << "Escolha uma opcao:" << endl;
         cout << "\t1 - Cadastro dos usuarios" << endl;
         cout << "\t2 - Cadastro para livros e Revistas e afins" << endl;
-        cout << "\t3 - Listagem de Livros e Revistas e afins" << endl;
-        cout << "\t4 - Retirada de Livros" << endl;
-        cout << "\t5 - Listagem de atrasos" << endl;
-        cout << "\t6 - Historico de retirada" << endl;
+        cout << "\t3 - Alterar livros, autores e editoras" << endl;
+        cout << "\t4 - Listagem de Livros e Revistas e afins" << endl;
+        cout << "\t5 - Pesquisar" << endl;
+        cout << "\t6 - Retirada de Livros" << endl;
+        cout << "\t7 - Listagem de atrasos" << endl;
+        cout << "\t8 - Historico de retirada" << endl;
         cout << "\t0 - Fim" << endl;
         cin >> escolha;
         cout << endl;
@@ -619,7 +714,7 @@ int main()
             /*CADASTRO USUARIO*/
             cadastrousuario(users,usercont);
             break;
- /////////////////////////////////////////////////////////////////////       
+       
         case 2:
             cout << endl << "Escolha uma opcao:" << endl;
             cout << "\t1 - Cadastro dos Autores" << endl;
@@ -657,11 +752,39 @@ int main()
                                 }    
             break;
     
-///////////////////////////////////////////////////////////////////////////////////
-       
-        case 3:
-       
+
+        case 3: 
             cout << endl << "Escolha uma opcao:" << endl;
+            cout << "\t1 - Alterar dos Autores" << endl;
+            cout << "\t2 - Alterar das Editoras" << endl;
+            cout << "\t3 - Alterar de Livros" << endl;
+            cout << "\t0 - Fim" << endl;
+            cin >> escolha;
+            cin.ignore();
+            /*ALTERAR*/ switch (escolha) {
+            case 1:
+                alterarautor(autor);
+
+
+                break;
+            case 2:
+                alterareditora(editora);
+
+
+                break;
+            case 3:
+                alterarlivro(livros, autor, editora);
+            case 0:
+                break;
+            default:
+                cout << "Opcao invalida, inserir numeros de 0 a 3" << endl;
+            
+            }
+            break;
+
+        case 4:
+       
+            cout << endl << "Escolha uma opcao para a listagem:" << endl;
             cout << "\t1 - Listagem dos Autores" << endl;
             cout << "\t2 - Listagem das Editoras" << endl;
             cout << "\t3 - Listagem de Livros" << endl;
@@ -702,23 +825,36 @@ int main()
            
          
             break;
-        case 4:
+        case 5:
+            int opcoes;
+            cout << endl << "Escolha uma opcao para listar para sua pesquisa:" << endl;
+            cout << "\t1 - Titulo" << endl;
+            cout << "\t2 - Autores" << endl;
+            cout << "\t3 - Editoras" << endl;
+            cout << "\t4 - Assunto" << endl;
+            cout << "\t0 - Fim" << endl;
+            cin >> opcoes;
+
+            pesquisaritem(livros, revista, autor, editora, opcoes);
+
+            break;
+        case 6:
             retirarLivro(users, livros,autor,editora);
 
             break;
-///////////////////////////////////////////////////////////////////////////////////
-        case 5:
+
+        case 7:
             listagematrasos(users,livros);
             
             break;
       
- //////////////////////////////////////////////////////////////////////////////////
+
         
-        case 6:
+        case 8:
             historicaretirados(users,livros);
             break;
        
-////////////////////////////////////////////////////////////////////////////////////
+
       
         case 0:
             break;
@@ -729,7 +865,8 @@ int main()
     } while (escolha != 0);
 
    
-
+    cout << "Volte sempre!" << endl;
+    return 0;
 }
 
 
