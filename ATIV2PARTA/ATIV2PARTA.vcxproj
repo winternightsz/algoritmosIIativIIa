@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="ATIV2PARTA.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ATIV2PARTA.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
